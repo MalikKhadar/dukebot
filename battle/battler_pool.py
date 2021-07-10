@@ -76,7 +76,7 @@ class Battler_Pool:
         if len(self.retired) == 0:
             return
         #else, display retired
-        print("-RETIRED-")
+        print("\t-RETIRED-")
         print("who\twins\tloss\tdraw")
         for r in self.retired:
             r.print_stat()

@@ -19,8 +19,10 @@ class Battle:
             rec = self.rm.records[-1]
         #render, await choice
         rec.render()
-        print("1: " + rec.b1.talk())
-        print("2: " + rec.b2.talk())
+        t1 = self.rm.get_topics(rec.b1, rec.b2)
+        t2 = self.rm.get_topics(rec.b2, rec.b1)
+        print("1: " + rec.b1.talk(t1))
+        print("2: " + rec.b2.talk(t2))
         choice = input("1 or 2: ")
         if choice == "1":
             rec.winner = rec.b1

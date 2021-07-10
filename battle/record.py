@@ -1,6 +1,7 @@
 from os import truncate
 from battle.battler_pool import Battler_Pool
 from midi import midi_tools
+from battle.talk import Topics
 
 class Battle_Record:
     def __init__(self, b1, b2):
@@ -16,11 +17,26 @@ class Battle_Record:
         wav = self.b2.generate_wav()
         midi_tools.save_wav(wav, d2)
 
-class History:
-    def __init__(self, balance=0,
-                 history=0):
-        self.balance = balance
-        self.history = history
+    def in_record(self, b):
+        '''true if b in record'''
+        if self.b1 == b:
+            return True
+        if self.b2 == b:
+            return True
+        #b isn't in record
+        return False
+
+    def outcome(self, b1, b2):
+        '''b1 won: 1, lost: -1, else 0'''
+        if self.winner == b1:
+            #make sure b1 beat b2
+            if self.in_record(b2):
+                return 1
+        elif self.winner == b2:
+            #make sure b2 beat b1
+            if self.in_record(b1):
+                return -1
+        return 0
 
 class Record_Manager:
     def __init__(self, records=None, 
@@ -44,29 +60,24 @@ class Record_Manager:
         record = Battle_Record(b1, b2)
         self.records.append(record)
 
-def is_history(record, b1, b2):
-    '''true if b1 & b2 in record'''
-    if record.b1 == b1:
-        if record.b2 == b2:
-            return True
-    #check both orders
-    if record.b1 == b2:
-        if record.b2 == b1:
-            return True
-    return False
+    def get_history(self, b1, b2):
+        '''return b1 to b2 history'''
+        hist = 0
+        for r in self.records:
+            hist += r.outcome(b1, b2)
+        return hist
 
-def get_history(records, b1, b2):
-    '''return b1 to b2 history'''
-    balance = 0
-    history = 0
-    for r in records:
-        #check if b1/b2 in record
-        if is_history(r, b1, b2):
-            history += 1
-            #winner shifts balance
-            if r.winner == b1:
-                balance += 1
-            elif r.winner == b2:
-                balance -= 1
-    h = History(balance, history)
-    return h
+    def get_topics(self, b1, b2):
+        '''return topics from b1 to b2'''
+        #get ages, calculate diff
+        a1 = b1.get_age()
+        a2 = b2.get_age()
+        a_diff = a1 - a2
+        #same for ratios
+        r1 = b1.get_ratio()
+        r2 = b2.get_ratio()
+        r_diff = r1 - r2
+        #get history of b1 vs b2
+        hist = self.get_history(b1, b2)
+        #create topics object
+        return Topics(a_diff, r_diff, hist)

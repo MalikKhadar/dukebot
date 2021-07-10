@@ -1,6 +1,7 @@
 from midi import midi_tools
 from battle.rand_emoji import random_emoji
 from battle.stat import Stat
+import battle.talk as b_talk
 
 class Battler:
     def __init__(self, midi, stat=None, 
@@ -32,8 +33,28 @@ class Battler:
         else:
             self.stat.loss += 1
 
-    def talk(self, history=None):
+    def get_age(self):
+        '''return total num of battles'''
+        w = self.stat.wins
+        l = self.stat.loss
+        d = self.stat.draw
+        #sum battle outcomes
+        return w + l + d
+
+    def get_ratio(self):
+        '''return wins - loss'''
+        w = self.stat.wins
+        l = self.stat.loss
+        #ignore draws
+        return w - l
+
+    def talk(self, topics=None):
         '''battle dialogue'''
-        say = self.emoji + ":\t"
-        #say += talk(history)
+        #assign topics object
+        t = topics
+        if t == None:
+            t = b_talk.Topics()
+        #say emoji, then phrase
+        say = self.emoji + ": "
+        say += b_talk.talk(t)
         return say

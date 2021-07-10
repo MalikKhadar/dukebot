@@ -5,7 +5,7 @@ class Battler_Pool:
     def __init__(self, chunk_dir=
                  "midi/chunks/",
                  battlers=None, 
-                 retired=None, size=10):
+                 retired=None, size=4):
         #folder holding chunks
         self.chunk_dir = chunk_dir
         #chunks in play
@@ -40,7 +40,7 @@ class Battler_Pool:
         #minus 1 because >=2 battlers needed
         b_len = len(self.battlers) - 1
         #chance based on pool fullness
-        fullness = b_len/self.size
+        fullness = b_len/(self.size-1)
         thresh = 1 - fullness
         check = random.uniform(0, 1)
         return True if check < thresh else False

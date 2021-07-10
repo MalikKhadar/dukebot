@@ -5,14 +5,22 @@ default = [
     "My time to shine.",
     "This should be fun.",
     "Good luck!",
-    "Let the games begin.",
     "It's go time!",
     "Here I go!",
     "Let's duel!",
     "I'll do my best!",
-    "An equal! Don't hold back!",
+    "I won't hold back!",
     "It's anyone's game.",
-    "Victory is mine!"
+    "Victory is mine!",
+    "Let me show ya what I've got!",
+    "(:<",
+    "I was made for this!",
+    "I'm ready!",
+    "Prepare yourself!",
+    "En garde!",
+    "Are you ready?",
+    "This is it!",
+    "SHOW ME YOUR MOVES"
 ]
 
 age_neg = [
@@ -28,7 +36,14 @@ age_neg = [
     "They say old is gold. You're living disproof.",
     "Aren’t you getting a little old for this?",
     "You’re getting awfully stale.",
-    "You’ve got something of a reputation."
+    "You’ve got something of a reputation.",
+    "You've lost your luster.",
+    "It's my turn! You're going down!",
+    "YOUR CRUEL REIGN SHALL COME TO AN END",
+    "I will be the champion!",
+    "Time's up! Your lucky streak is over.",
+    "Your little tune's getting old.",
+    "Got any last words?"
 ]
 
 age_pos = [
@@ -44,7 +59,14 @@ age_pos = [
     "I won’t go easy on you, rookie.",
     "Let’s get this over with.",
     "Blah blah blah, I’ve seen this before.",
-    "Hey, treat this like a learning experience."
+    "Hey, treat this like a learning experience.",
+    "I've been around a long time. And you won't!",
+    "You lack practice.",
+    "I've got the experience, amateur.",
+    "YOU ARE UNTESTED. I STAND UNBENT LIKE STEEEEEEEL",
+    "I've withstood the sands of time. This is nothing.",
+    "A gnarled old branch dulls the blade that severs a sapling.",
+    "I'm an expert. It's a shame you have to face me!"
 ]
 
 ratio_neg = [
@@ -55,13 +77,19 @@ ratio_neg = [
     "I can do this!",
     "Here goes!",
     "This’ll be tough.",
-    "Oh, a worthy opponent.",
     "I’m gonna lose, aren’t I?",
     "Oh no… I don't wanna lose!",
     "[recounts extensive dramatic backstory]",
     "This is my toughest challenge yet.",
     "You’re going down.",
-    "Things aren't looking to good for me..."
+    "Things aren't looking to good for me...",
+    "It's time to even the odds.",
+    "I won't give up hope!",
+    "It's not over yet!",
+    "THE FLAME OF HOPE BURNS WITHIN MEEEEEEE",
+    "Winners never quit... and quitters never win!",
+    "I'll never stop fighting!",
+    "I believe..."
 ]
 
 ratio_pos = [
@@ -75,17 +103,29 @@ ratio_pos = [
     "Good luck. You’ll need it.",
     "Too bad you can’t just surrender.",
     "What a joke.",
-    "I hate that I have to do this to you…",
     "I don’t lose. Sorry.",
-    "Oh come on, this is easy peasy."
+    "Oh come on, this is too easy.",
+    "I'm going to win. Why bother?",
+    "Give up while you still can.",
+    "Take this: L",
+    "You'll need more than luck.",
+    "There's no chance I'll lose.",
+    "I FORSEE VICTORY. FACE YOUR DEMISE",
+    "Your defeat is statistically likely.",
+    "This is a waste of my abilities."
 ]
 
 hist_neg = [
-    "You again?",
     "I won’t lose this time.",
     "You won’t beat me again!",
     "You... You won't be so lucky this time!",
-    "Things have changed since our last battle."
+    "Things have changed since our last battle.",
+    "I've been waiting for this moment.",
+    "I'm back. And I'm stronger now.",
+    "And so we clash once again.",
+    "I hope you didn't get too used to winning.",
+    "I'm not holding back this time!",
+    "IT'S TIME TO TILT THE SCALES"
 ]
 
 hist_pos = [
@@ -93,7 +133,12 @@ hist_pos = [
     "So we meet again.",
     "Let’s put an end to our little rivalry.",
     "What makes you think you’ll win this time?",
-    "Hah, it's just like old times."
+    "Hah, it's just like old times, isn't it?",
+    "You're persistent, I'll give you that.",
+    "Look who came crawling back.",
+    "You again? Back for more?",
+    "How about I put you down for good?",
+    "CRUSHING YOU AGAIN SHALL FILL ME WITH GLEE"
 ]
 
 class Topics:

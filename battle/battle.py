@@ -19,6 +19,9 @@ class Battle:
             rec = self.rm.records[-1]
         #render, await choice
         rec.render()
+        print("\nBattlers")
+        rec.b1.print_stat()
+        rec.b2.print_stat()
         t1 = self.rm.get_topics(rec.b1, rec.b2)
         t2 = self.rm.get_topics(rec.b2, rec.b1)
         print("1: " + rec.b1.talk(t1))

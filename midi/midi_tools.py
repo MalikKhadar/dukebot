@@ -61,6 +61,12 @@ def quantized(n, params):
     q = np.round(n * precision) / precision
     return q
 
+def lower_volume(chunk, percent):
+    '''lowers velocity of notes in chunk'''
+    for note in chunk:
+        note.velocity *= percent/100
+        note.velocity = int(note.velocity)
+
 def highest_note(notes):
     '''returns highest note from chord'''
     highest = notes[0]

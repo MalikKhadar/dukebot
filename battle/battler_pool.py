@@ -63,6 +63,9 @@ class Battler_Pool:
     
     def retire_check(self, b, loss_cap=3):
         '''if b.loss > loss_cap, retire'''
+        if b in self.retired:
+            #stop if b already retired
+            return
         if b.stat.loss >= loss_cap:
             self.battlers.remove(b)
             self.retired.append(b)

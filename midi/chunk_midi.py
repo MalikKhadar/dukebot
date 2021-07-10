@@ -15,11 +15,12 @@ class Chunk_Length:
 class Chunk_Cleaning:
     '''specify how orignial midi is cleaned'''
     def __init__(self, highest_notes=True, remove_overlap=True,
-                 deletion=False, trim_chunk=True):
+                 deletion=False, trim_chunk=True, volume=60):
         self.highest_notes = highest_notes
         self.remove_overlap = remove_overlap
         self.deletion = deletion
         self.trim_chunk = trim_chunk
+        self.volume = volume
 
 class Chunk_Saving:
     '''specify source of midi and dest of chunks'''
@@ -43,6 +44,7 @@ def save_chunk(chunk, params, f_index, file_prefix="0"):
     if params.cleaning.remove_overlap:
         chunk = midi.remove_overlap(chunk, params)
     chunk = midi.bind_notes(chunk)
+    midi.lower_volume(chunk, params.cleaning.volume)
     if params.cleaning.trim_chunk:
         chunk = midi.trim_chunk(chunk, params)
     #only use long chunks

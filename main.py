@@ -4,16 +4,18 @@
 #   In International Conference on Learning Representations, 2019.
 
 import pretty_midi
-from midi import midi_tools
+from midi import chunk_midi
 from battle import battle
+
+
 
 b = battle.Battle()
 while(True):
     b.host_battle()
 
-# saving = midi_tools.Chunk_Saving("maestro-v3.0.0/", "0", "chunks/")
-# params = midi_tools.Chunk_Params(saving)
-# midi_tools.chunks_from_directory(params)
+# saving = chunk_midi.Chunk_Saving("midi/maestro-v3.0.0/", "0", "midi/chunks/")
+# params = chunk_midi.Chunk_Params(saving)
+# chunk_midi.chunks_from_directory(params)
 
 #def generate_chunks
 

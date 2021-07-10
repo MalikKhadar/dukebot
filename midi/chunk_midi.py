@@ -1,6 +1,6 @@
 #source: https://github.com/haryoa/note_music_generator
 import glob
-import midi_tools as midi
+import midi.midi_tools as midi
 import pretty_midi
 
 class Chunk_Length:
@@ -15,13 +15,12 @@ class Chunk_Length:
 class Chunk_Cleaning:
     '''specify how orignial midi is cleaned'''
     def __init__(self, highest_notes=True, remove_overlap=True,
-                 deletion=False, trim_chunk=True, volume=60):
+                 deletion=False, trim_chunk=True):
         self.highest_notes = highest_notes
         self.remove_overlap = remove_overlap
         self.deletion = deletion
         self.trim_chunk = trim_chunk
-        self.volume = volume
-
+        
 class Chunk_Saving:
     '''specify source of midi and dest of chunks'''
     def __init__(self, dir, prefix, dest):
@@ -43,8 +42,7 @@ def save_chunk(chunk, params, f_index, file_prefix="0"):
         chunk = midi.highest_notes(chunk)
     if params.cleaning.remove_overlap:
         chunk = midi.remove_overlap(chunk, params)
-    chunk = midi.bind_notes(chunk)
-    midi.lower_volume(chunk, params.cleaning.volume)
+    chunk = midi.bind_notes(chunk, params.cleaning.volume)
     if params.cleaning.trim_chunk:
         chunk = midi.trim_chunk(chunk, params)
     #only use long chunks
@@ -83,11 +81,11 @@ def chunkify_midi(midi_data, params):
 def create_chunks(midi_path, params, file_prefix):
     '''takes midi from path, chunkifies, writes to dest'''
     midi_data = pretty_midi.PrettyMIDI(midi_path)
-    chunks = chunkify_midi(midi_data, params, file_prefix)
+    chunks = chunkify_midi(midi_data, params)
     #write each chunk to dest
     f_index = 0
     for chunk in chunks:
-        save_chunk(chunk, params, f_index)
+        save_chunk(chunk, params, f_index, file_prefix)
         #give each file unique name
         f_index += 1
 

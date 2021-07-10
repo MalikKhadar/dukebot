@@ -61,12 +61,6 @@ def quantized(n, params):
     q = np.round(n * precision) / precision
     return q
 
-def lower_volume(chunk, percent):
-    '''lowers velocity of notes in chunk'''
-    for note in chunk:
-        note.velocity *= percent/100
-        note.velocity = int(note.velocity)
-
 def highest_note(notes):
     '''returns highest note from chord'''
     highest = notes[0]
@@ -166,11 +160,11 @@ def save_midi(chunk, params, file_prefix, f_index):
         path = params.saving.dest + file_prefix + str(f_index)
         pm.write(path + ".midi")
         
-def make_wav(midi, sampleRate=44100):
+def make_wav(midi, sampleRate=44100, volume=0.1):
     '''synthesizes midi to wav'''
     waves = midi.synthesize(sampleRate, signal.sawtooth)
     # Convert to (little-endian) 16 bit integers.
-    audio = (waves * (2 ** 15 - 1)).astype("<h")
+    audio = (waves * (2 ** 15 - 1) * volume).astype("<h")
     return audio
 
 def save_wav(wav, dest, sampleRate=44100):

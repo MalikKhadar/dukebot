@@ -1,7 +1,7 @@
 from midi import midi_tools
-from battling.rand_emoji import random_emoji
-from battling.stat import Stat
-import battling.talk as b_talk
+from rand_emoji import random_emoji
+from stat import Stat
+import talk as b_talk
 from shutil import copyfile
 
 class Battler:

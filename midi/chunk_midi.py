@@ -42,7 +42,7 @@ def save_chunk(chunk, params, f_index, file_prefix="0"):
         chunk = midi.highest_notes(chunk)
     if params.cleaning.remove_overlap:
         chunk = midi.remove_overlap(chunk, params)
-    chunk = midi.bind_notes(chunk, params.cleaning.volume)
+    chunk = midi.bind_notes(chunk)
     if params.cleaning.trim_chunk:
         chunk = midi.trim_chunk(chunk, params)
     #only use long chunks

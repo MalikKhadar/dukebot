@@ -9,13 +9,13 @@ from battle import battle
 
 
 
-b = battle.Battle()
-while(True):
-    b.host_battle()
-
-# saving = chunk_midi.Chunk_Saving("midi/maestro-v3.0.0/", "0", "midi/chunks/")
-# params = chunk_midi.Chunk_Params(saving)
-# chunk_midi.chunks_from_directory(params)
+# b = battle.Battle()
+# while(True):
+#     b.host_battle()
+print("alive")
+saving = chunk_midi.Chunk_Saving("midi/maestro-v3.0.0/", "0", "midi/chunks/")
+params = chunk_midi.Chunk_Params(saving)
+chunk_midi.chunks_from_directory(params)
 
 #def generate_chunks
 

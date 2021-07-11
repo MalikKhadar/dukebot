@@ -2,9 +2,7 @@
 #   Sander Dieleman, Erich Elsen, Jesse Engel, and Douglas Eck. "Enabling
 #   Factorized Piano Music Modeling and Generation with the MAESTRO Dataset."
 #   In International Conference on Learning Representations, 2019.
-
-# import pretty_midi
-# from midi import chunk_midi
+import pretty_midi
 from battling.battle import Battle
 from keep_alive import keep_alive
 import discord

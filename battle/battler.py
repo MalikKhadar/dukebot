@@ -2,6 +2,7 @@ from midi import midi_tools
 from battle.rand_emoji import random_emoji
 from battle.stat import Stat
 import battle.talk as b_talk
+from shutil import copyfile
 
 class Battler:
     def __init__(self, midi, stat=None, 
@@ -20,6 +21,10 @@ class Battler:
         '''returns midi as wav'''
         m = midi_tools.make_midi(self.midi)
         return midi_tools.make_wav(m)
+
+    def write_midi(self, dest):
+        '''write midi to dest'''
+        copyfile(self.midi, dest)
 
     def print_stat(self):
         '''print row in stats'''

@@ -4,7 +4,7 @@
 #   In International Conference on Learning Representations, 2019.
 
 import pretty_midi
-import battling
+from battling.battle import Battle
 from keep_alive import keep_alive
 import discord
 import os
@@ -31,7 +31,7 @@ if "active" not in db.keys():
   db["active"] = False
 
 if not os.path.isfile("battle.pkl"):
-  b = battling.Battle()
+  b = Battle()
   save_battle(b, "battle.pkl")
   
 #gotta keep track of user on each battle event, if they're the one that added the emoji, on_reaction_add, do the stuff
@@ -56,11 +56,11 @@ async def on_message(message):
         #TODO print standing champ, all-time champ
         db["active"] = False
         s = "" # db["battle"].champs()
-        s += "Clear battle history with $battle_reset. Goodbye."
+        s += "Clear battle history with $battle_clear. Goodbye."
         await message.channel.send(s)
 
-    if msg.startswith('$battle_reset'):
-        b = battling.Battle()
+    if msg.startswith('$battle_clear'):
+        b = Battle()
         save_battle(b, "battle.pkl")
         s = "Battle history has been cleared."
         await message.channel.send(s)
@@ -70,7 +70,8 @@ async def on_message(message):
         b.host_battle()
         response = b.battle_msg()
         save_battle(b, "battle.pkl")
-        response += b.rm.pool.stats_string()
+        #move following to reaction handler
+        response += b.stats_string()
         await message.channel.send(response)
 
 keep_alive()

@@ -1,4 +1,4 @@
-import record
+from battling import record
 
 class Battle:
     def __init__(self, rm= None):
@@ -40,7 +40,10 @@ class Battle:
         s += "1: " + rec.b1.talk(t1) + "\n"
         s += "2: " + rec.b2.talk(t2) + "\n"
         return s
-        
+    
+    def stats_string(self):
+        '''stat string from pool'''
+        return self.rm.pool.stats_string()
         # choice = input("1 or 2: ")
         # if choice == "1":
         #     rec.winner = rec.b1

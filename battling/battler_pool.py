@@ -1,5 +1,5 @@
 import os, random
-from battler import Battler
+from battling.battler import Battler
 
 class Battler_Pool:
     def __init__(self, chunk_dir=
@@ -78,7 +78,7 @@ class Battler_Pool:
             s += b.stat_string()
         #if no retired, stop
         if len(self.retired) == 0:
-            return
+            return s
         #else, display retired
         s += "\t-RETIRED-\n"
         s += "who\twins\tloss\tdraw\n"

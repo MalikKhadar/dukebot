@@ -7,7 +7,7 @@ class Stat:
 
     def stat_string(self):
         '''return row in stats'''
-        s = self.wins + "\t"
-        s += self.loss + "\t"
-        s += self.draw + "\n"
+        s = str(self.wins) + "\t"
+        s += str(self.loss) + "\t"
+        s += str(self.draw) + "\n"
         return s

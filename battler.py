@@ -1,6 +1,6 @@
 from midi import midi_tools
 from rand_emoji import random_emoji
-from stat import Stat
+from statistics import Stat
 import talk as b_talk
 from shutil import copyfile
 

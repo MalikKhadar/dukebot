@@ -1,5 +1,10 @@
 import record
 
+class Peepee:
+    def __init__(self, strengf=10):
+        self.strengf = strengf
+peepee = Peepee()
+
 class Battle:
     def __init__(self, rm= None):
         if rm == None:

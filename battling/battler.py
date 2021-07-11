@@ -54,6 +54,10 @@ class Battler:
         #ignore draws
         return w - l
 
+    def get_wins(self):
+        '''return stat.wins'''
+        return stat.wins
+
     def talk(self, topics=None):
         '''battle dialogue'''
         #assign topics object

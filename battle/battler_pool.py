@@ -70,16 +70,18 @@ class Battler_Pool:
             self.battlers.remove(b)
             self.retired.append(b)
 
-    def print_stats(self):
-        '''prints out stats'''
-        print("who\twins\tloss\tdraw")
+    def stats_string(self):
+        '''string with stats'''
+        s = "\t~Battlers~"
+        s += "who\twins\tloss\tdraw\n"
         for b in self.battlers:
-            b.print_stat()
+            s += b.stat_string()
         #if no retired, stop
         if len(self.retired) == 0:
             return
         #else, display retired
-        print("\t-RETIRED-")
-        print("who\twins\tloss\tdraw")
+        s += "\t-RETIRED-\n"
+        s += "who\twins\tloss\tdraw\n"
         for r in self.retired:
-            r.print_stat()
+            s += r.stat_string()
+        return s

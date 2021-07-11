@@ -26,10 +26,11 @@ class Battler:
         '''write midi to dest'''
         copyfile(self.midi, dest)
 
-    def print_stat(self):
-        '''print row in stats'''
-        print(self.emoji, end="\t")
-        self.stat.print_stat()
+    def stat_string(self):
+        '''return row in stats'''
+        s = self.emoji + ": "
+        s += self.stat.stat_string()
+        return s
 
     def add_stat(self, won=True, cap=3):
         '''update stat from battle'''

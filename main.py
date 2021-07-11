@@ -26,7 +26,6 @@ if "battle" not in db.keys():
 
 #gotta keep track of user on each battle event, if they're the one that added the emoji, on_reaction_add, do the stuff
 #when battle_end, display standing champion and the overall champion
-#make it save 1.midi, 2.midi
 
 @client.event
 async def on_ready():
@@ -57,6 +56,7 @@ async def on_message(message):
 
     if msg.startswith('$challenge'):
         db["battle"].host_battle()
+        db["battle"].battle_msg()
 
 keep_alive()
 client.run(os.getenv('TOKEN'))

@@ -5,8 +5,9 @@ class Stat:
         self.loss = loss
         self.draw = draw
 
-    def print_stat(self):
-        '''print row in stats'''
-        print(self.wins, end="\t")
-        print(self.loss, end="\t")
-        print(self.draw)
+    def stat_string(self):
+        '''return row in stats'''
+        s = self.wins + "\t"
+        s += self.loss + "\t"
+        s += self.draw + "\n"
+        return s

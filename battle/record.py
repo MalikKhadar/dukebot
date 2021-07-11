@@ -18,10 +18,10 @@ class Battle_Record:
         midi_tools.save_wav(wav, d2)
 
     def save_midi(self, d1="1.mid",
-                  d1="2.mid")
+                  d2="2.mid"):
         '''write battlers to midi'''
-        self.b1.save_midi(d1)
-        self.b2.save_midi(d2)
+        self.b1.write_midi(d1)
+        self.b2.write_midi(d2)
 
     def in_record(self, b):
         '''true if b in record'''

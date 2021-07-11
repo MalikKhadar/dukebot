@@ -5,7 +5,7 @@
 
 # import pretty_midi
 # from midi import chunk_midi
-from battling import battle
+from battling.battle import Battle
 from keep_alive import keep_alive
 import discord
 import os
@@ -21,8 +21,9 @@ client = discord.Client()
 if "active" not in db.keys():
   db["active"] = False
 
-if "battle" not in db.keys():
-  db["battle"] = battle.Battle()
+# if "battle" not in db.keys():
+#   db["battle"] = s
+#   #  db["battle"] = battle.Battle()
 
 #gotta keep track of user on each battle event, if they're the one that added the emoji, on_reaction_add, do the stuff
 #when battle_end, display standing champion and the overall champion
@@ -41,6 +42,8 @@ async def on_message(message):
     if msg.startswith('$battle_begin'):
         await message.channel.send("It has begun.")
         db["active"] = True
+        if "battle" not in db.keys():
+            db["battle"] = Battle()
 
     if msg.startswith('$battle_end'):
         #TODO print standing champ, all-time champ

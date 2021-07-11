@@ -1,4 +1,4 @@
-from battle import record
+from battling import record
 
 class Battle:
     def __init__(self, rm= None):

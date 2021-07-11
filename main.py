@@ -3,9 +3,9 @@
 #   Factorized Piano Music Modeling and Generation with the MAESTRO Dataset."
 #   In International Conference on Learning Representations, 2019.
 
-import pretty_midi
-from midi import chunk_midi
-from battle import battle
+# import pretty_midi
+# from midi import chunk_midi
+from battling import battle
 from keep_alive import keep_alive
 import discord
 import os
@@ -56,7 +56,8 @@ async def on_message(message):
 
     if msg.startswith('$challenge'):
         db["battle"].host_battle()
-        db["battle"].battle_msg()
+        response = db["battle"].battle_msg()
+        await message.channel.send(response)
 
 keep_alive()
 client.run(os.getenv('TOKEN'))

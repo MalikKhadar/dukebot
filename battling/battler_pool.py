@@ -1,5 +1,5 @@
 import os, random
-from battle.battler import Battler
+from battling.battler import Battler
 
 class Battler_Pool:
     def __init__(self, chunk_dir=

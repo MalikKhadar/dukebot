@@ -1,7 +1,7 @@
 from os import truncate
-from battle.battler_pool import Battler_Pool
+from battling.battler_pool import Battler_Pool
 from midi import midi_tools
-from battle.talk import Topics
+from battling.talk import Topics
 
 class Battle_Record:
     def __init__(self, b1, b2):

@@ -59,7 +59,7 @@ age_pos = [
     "I won’t go easy on you, rookie.",
     "Let’s get this over with.",
     "Blah blah blah, I’ve seen this before.",
-    "Hey, treat this like a learning experience.",
+    "There's a reason I've been around so long.",
     "I've been around a long time. And you won't!",
     "You lack practice.",
     "I've got the experience, amateur.",

@@ -6,81 +6,57 @@
 import pretty_midi
 from midi import chunk_midi
 from battle import battle
+from keep_alive import keep_alive
+import discord
+import os
+from replit import db
 
 
+# b = battle.Battle()
+# while(True):
+#     b.host_battle()
 
-b = battle.Battle()
-while(True):
-    b.host_battle()
+client = discord.Client()
 
-# print("alive")
-# saving = chunk_midi.Chunk_Saving("midi/maestro-v3.0.0/", "0", "midi/chunks/")
-# params = chunk_midi.Chunk_Params(saving)
-# chunk_midi.chunks_from_directory(params)
+if "active" not in db.keys():
+  db["active"] = False
 
-#def generate_chunks
+if "battle" not in db.keys():
+  db["battle"] = battle.Battle()
 
-#first file in the dataset
-# midi_path = "train/mega8_9.midi"
+#gotta keep track of user on each battle event, if they're the one that added the emoji, on_reaction_add, do the stuff
+#when battle_end, display standing champion and the overall champion
+#make it save 1.midi, 2.midi
 
-# #access piano data
-# midi_data = pretty_midi.PrettyMIDI(midi_path)
-#midi_tools.chunks_from_directory("maestro-v3.0.0/", 4, 4, "chunks/")
-# piano = midi_data.instruments[0]
-# piano_roll = piano.get_piano_roll()
-# quantized = midi_tools.piano_roll_to_pretty_midi(piano_roll, 100)
-# quantized.write("q_test.midi")
-#midi_tools.chunkify_midi(midi_data, 2, 8, "train/", "mega8_")
+@client.event
+async def on_ready():
+    print('We have logged in as {0.user}'.format(client))
 
+@client.event
+async def on_message(message):
+    if message.author == client.user:
+        return
 
-# chunk = []
+    msg = message.content
 
-# print("duration:",midi_data.get_end_time())
-# print(f'{"note":>10} {"start":>10} {"end":>10}')
-# for instrument in midi_data.instruments:
-#     print("instrument:", instrument.program)
-#     for note in instrument.notes:
-#         if note.start < 5:
-#             print(f'{note.pitch:10} {note.start:10} {note.end:10}')
-#             chunk.append(note)
-# test = pretty_midi.Instrument(program=0)
-# midi_tools.populate_instrument(test, chunk)
-# roll = test.get_piano_roll()
-# pm = midi_tools.piano_roll_to_pretty_midi(roll)
-# pm.write("q_test.midi")
-#q = quantize(pm, 2)
-#pm.write("q_test.midi")
-# #get number of midi_chunks
-# track_length = midi_data.get_end_time()
-# chunk_length = 5    #each chunk lasts ~5 seconds
-# num_chunks = int(track_length/chunk_length)
+    if msg.startswith('$battle_begin'):
+        await message.channel.send("It has begun.")
+        db["active"] = True
 
-# tc = midi_data.get_tempo_changes()
-# midi_data.
-# for c in tc:
-#     print(c)
-# #set fps/quantize
-# bpm = midi_data.estimate_tempo()
-# bps = bpm/60        #get beats per second
-# notes_per_beat = 3  #will be (4*val)ths in 4/4
-# notes_per_second = bps*notes_per_beat
+    if msg.startswith('$battle_end'):
+        #TODO print standing champ, all-time champ
+        db["active"] = False
+        s = "" # db["battle"].champs()
+        s += "Clear battle history with $battle_reset. Goodbye."
+        await message.channel.send(s)
 
-# print(notes_per_second)
-# piano_roll = piano.get_piano_roll(fs=notes_per_second)
+    if msg.startswith('$battle_reset'):
+        db["battle"] = battle.Battle()
+        s = "Battle history has been cleared."
+        await message.channel.send(s)
 
-# quantized = midi_tools.piano_roll_to_pretty_midi(piano_roll, notes_per_second)
-# quantized.write("q_test.midi")
+    if msg.startswith('$challenge'):
+        db["battle"].host_battle()
 
-
-# sampleRate = 44100
-# waves = midi_data.synthesize(sampleRate, signal.sawtooth)
-# # Convert to (little-endian) 16 bit integers.
-# audio = (waves * (2 ** 15 - 1)).astype("<h")
-# with wave.open("sound2.wav", "w") as f:
-#     # 2 Channels.
-#     f.setnchannels(2)
-#     # 2 bytes per sample.
-#     f.setsampwidth(2)
-#     f.setframerate(sampleRate)
-#     f.writeframes(audio.tobytes())
-# piano = midi_data.instruments[0]
+keep_alive()
+client.run(os.getenv('TOKEN'))

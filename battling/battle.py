@@ -44,6 +44,22 @@ class Battle:
     def stats_string(self):
         '''stat string from pool'''
         return self.rm.pool.stats_string()
+
+    def champ_stat(self):
+        '''stats of standing/retired champ'''
+        #standing champ
+        s = "\t~Standing Champ~\n"
+        s += "who\twins\tloss\tdraw\n"
+        standing = self.rm.pool.get_champ()
+        s += standing.stat_string()
+        #ultimate champ
+        s += "\t~Ultimate Champ~\n"
+        s += "who\twins\tloss\tdraw\n"
+        #False param for non-standing champ
+        ult = self.rm.pool.get_champ(False)
+        s += ult.stat_string()
+        return s
+        
         # choice = input("1 or 2: ")
         # if choice == "1":
         #     rec.winner = rec.b1

@@ -35,7 +35,6 @@ if not os.path.isfile("battle.pkl"):
   save_battle(b, "battle.pkl")
   
 #gotta keep track of user on each battle event, if they're the one that added the emoji, on_reaction_add, do the stuff
-#when battle_end, display standing champion and the overall champion
 
 @client.event
 async def on_ready():
@@ -53,10 +52,10 @@ async def on_message(message):
         db["active"] = True
 
     if msg.startswith('$battle_end'):
-        #TODO print standing champ, all-time champ
         db["active"] = False
-        s = "" # db["battle"].champs()
-        s += "Clear battle history with $battle_clear. Goodbye."
+        b = load_battle("battle.pkl")
+        s = b.champ_string()
+        s += "\nClear battle history with $battle_clear. Goodbye."
         await message.channel.send(s)
 
     if msg.startswith('$battle_clear'):
@@ -65,7 +64,7 @@ async def on_message(message):
         s = "Battle history has been cleared."
         await message.channel.send(s)
 
-    if msg.startswith('$challenge'):
+    if msg.startswith('$challenge') and db["active"]:
         b = load_battle("battle.pkl")
         b.host_battle()
         response = b.battle_msg()

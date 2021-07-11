@@ -1,10 +1,5 @@
 import record
 
-class Peepee:
-    def __init__(self, strengf=10):
-        self.strengf = strengf
-peepee = Peepee()
-
 class Battle:
     def __init__(self, rm= None):
         if rm == None:
@@ -35,7 +30,7 @@ class Battle:
         else:
             rec = self.rm.records[-1]
         #display stats of contenders
-        s = "\t~Contenders~"
+        s = "\t~Contenders~\n"
         s += "who\twins\tloss\tdraw\n"
         s += rec.b1.stat_string()
         s += rec.b2.stat_string()

@@ -16,27 +16,23 @@ import pickle
 #     b.host_battle()
 
 def save_battle(battle, dest):
-    with open('dest', 'wb') as output:
+    with open(dest, 'wb') as output:
         pickle.dump(battle, output, pickle.HIGHEST_PROTOCOL)
         print("dumped")
 
 def load_battle(dest):
-    with open('dest', 'rb') as input_file:
-        return pickle.load(input_file)
+    with open(dest, 'rb') as input_file:
         print("loaded")
+        return pickle.load(input_file)
 
 client = discord.Client()
 
 if "active" not in db.keys():
   db["active"] = False
 
-if "used" not in db.keys():
+if not os.path.isfile("battle.pkl"):
   b = battling.Battle()
   save_battle(b, "battle.pkl")
-  db["used"] = True
-
-# if "battle" not in db.keys():
-#   db["battle"] = battling.peepee
   
 #gotta keep track of user on each battle event, if they're the one that added the emoji, on_reaction_add, do the stuff
 #when battle_end, display standing champion and the overall champion
@@ -55,8 +51,6 @@ async def on_message(message):
     if msg.startswith('$battle_begin'):
         await message.channel.send("It has begun.")
         db["active"] = True
-        # if "battle" not in db.keys():
-        #     db["battle"] = Battle()
 
     if msg.startswith('$battle_end'):
         #TODO print standing champ, all-time champ
@@ -76,6 +70,7 @@ async def on_message(message):
         b.host_battle()
         response = b.battle_msg()
         save_battle(b, "battle.pkl")
+        response += b.rm.pool.stats_string()
         await message.channel.send(response)
 
 keep_alive()

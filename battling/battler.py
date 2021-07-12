@@ -58,6 +58,10 @@ class Battler:
         '''return stat.wins'''
         return self.stat.wins
 
+    def get_loss(self):
+        '''returns stat.loss'''
+        return self.stat.loss
+
     def talk(self, topics=None):
         '''battle dialogue'''
         #assign topics object

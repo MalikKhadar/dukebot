@@ -98,4 +98,7 @@ class Battler_Pool:
         for c in contenders:
             if c.get_wins() > champ.get_wins():
                 champ = c
+            elif c.get_wins() == champ.get_wins():
+                if c.get_loss() < champ.get_loss():
+                    champ = c
         return champ

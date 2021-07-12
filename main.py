@@ -94,6 +94,37 @@ async def on_message(message):
         # #move following to reaction handler
         # response += b.stats_string()
 
-
+@client.event
+async def on_reaction_add(reaction, user):
+    msgid = reaction.message.id
+    #stop if reaction to normal message
+    if msgid not in db["dict"].keys() or not db["active"]:
+        return
+    b = load_battle("battle.pkl")
+    userid = db["dict"][msgid][0]
+    r_num = db["dict"][msgid][1]
+    #stop if reacter didn't initiate challenge
+    if user.id != userid:
+        return
+    #stop if a winner was already determined
+    rec = b.rm.records[r_num]
+    if rec.winner != None:
+        return
+        
+    if rec.b1.emoji == reaction.emoji:
+        rec.winner = rec.b1
+        rec.b1.add_stat(won=True)
+        rec.b2.add_stat(won=False)
+    elif rec.b2.emoji == reaction.emoji:
+        rec.winner = rec.b2
+        rec.b1.add_stat(won=False)
+        rec.b2.add_stat(won=True)
+    else:
+        #stop if emoji is irrelevent
+        return
+    
+    
+    
+    
 keep_alive()
 client.run(os.getenv('TOKEN'))

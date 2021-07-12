@@ -30,11 +30,19 @@ client = discord.Client()
 if "active" not in db.keys():
   db["active"] = False
 
+if "dict" not in db.keys():
+  db["dict"] = {}
+
 if not os.path.isfile("battle.pkl"):
   b = Battle()
   save_battle(b, "battle.pkl")
   
 #gotta keep track of user on each battle event, if they're the one that added the emoji, on_reaction_add, do the stuff
+#First message show contenders/stats, have contenders' emoji on message
+#2nd and third, contenders say their things, have their wave files attached
+#4th, appears once choice is made, shows all stats, has winner's midi attached
+
+# dict for messageid to record_num?
 
 @client.event
 async def on_ready():
@@ -61,17 +69,31 @@ async def on_message(message):
     if msg.startswith('$battle_clear'):
         b = Battle()
         save_battle(b, "battle.pkl")
+        db["dict"] = {}
         s = "Battle history has been cleared."
         await message.channel.send(s)
 
     if msg.startswith('$challenge') and db["active"]:
+        sender = message.author.id
         b = load_battle("battle.pkl")
         b.host_battle()
         response = b.battle_msg()
         save_battle(b, "battle.pkl")
-        #move following to reaction handler
-        response += b.stats_string()
-        await message.channel.send(response)
+        c = message.channel
+        #get the emoji options
+        e1 = b.rm.records[-1].b1.emoji
+        e2 = b.rm.records[-1].b2.emoji
+        #post message with emoji
+        m = await c.send(response)
+        await m.add_reaction(e1)
+        await m.add_reaction(e2)
+        #file the messageid
+        r_num = len(b.rm.records) - 1
+        db["dict"][m.id] = [sender, r_num]
+        
+        # #move following to reaction handler
+        # response += b.stats_string()
+
 
 keep_alive()
 client.run(os.getenv('TOKEN'))

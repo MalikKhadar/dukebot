@@ -72,7 +72,7 @@ class Battler_Pool:
 
     def stats_string(self):
         '''string with stats'''
-        s = "\t~Battlers~"
+        s = "\t~Battlers~\n"
         s += "who\twins\tloss\tdraw\n"
         for b in self.battlers:
             s += b.stat_string()

@@ -80,9 +80,10 @@ async def on_message(message):
         response = b.battle_msg()
         save_battle(b, "battle.pkl")
         c = message.channel
+        rec = b.rm.records[-1]
         #get the emoji options
-        e1 = b.rm.records[-1].b1.emoji
-        e2 = b.rm.records[-1].b2.emoji
+        e1 = rec.b1.emoji
+        e2 = rec.b2.emoji
         #post message with emoji
         m = await c.send(response)
         await m.add_reaction(e1)
@@ -90,6 +91,12 @@ async def on_message(message):
         #file the messageid
         r_num = len(b.rm.records) - 1
         db["dict"][m.id] = [sender, r_num]
+        #send the battler's talk/wav
+        t1 = b.rm.get_topics(rec.b1, rec.b2)
+        t2 = b.rm.get_topics(rec.b2, rec.b1)
+        t1 += rec.b1.talk(t1)
+        t2 += rec.b2.talk(t2)
+
 
 @client.event
 async def on_reaction_add(reaction, user):
@@ -99,7 +106,7 @@ async def on_reaction_add(reaction, user):
         return
     b = load_battle("battle.pkl")
     userid = db["dict"][msgid][0]
-    r_num =db["dict"][msgid][1]
+    r_num = db["dict"][msgid][1]
     #stop if reacter didn't initiate challenge
     if user.id != userid:
         return
@@ -109,14 +116,17 @@ async def on_reaction_add(reaction, user):
         return
 
     file = ""
+    b.rm.records[r_num].save_midi()
     if rec.b1.emoji == reaction.emoji:
         rec.winner = rec.b1
         rec.b1.add_stat(won=True)
         rec.b2.add_stat(won=False)
+        file = discord.File("1.mid")
     elif rec.b2.emoji == reaction.emoji:
         rec.winner = rec.b2
         rec.b1.add_stat(won=False)
         rec.b2.add_stat(won=True)
+        file = discord.File("2.mid")
     else:
         #stop if emoji is irrelevent
         return
@@ -129,7 +139,7 @@ async def on_reaction_add(reaction, user):
     
     response = "The battle has been decided. The victor's midi is attached.\n\n"
     response += b.stats_string()
-    await reaction.message.channel.send(response)
+    await reaction.message.channel.send(file=file, content=response)
     
 keep_alive()
 client.run(os.getenv('TOKEN'))

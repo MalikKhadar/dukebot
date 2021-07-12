@@ -34,11 +34,6 @@ class Battle:
         s += "who\twins\tloss\tdraw\n"
         s += rec.b1.stat_string()
         s += rec.b2.stat_string()
-        #let the contenders exchange words
-        t1 = self.rm.get_topics(rec.b1, rec.b2)
-        t2 = self.rm.get_topics(rec.b2, rec.b1)
-        s += "1: " + rec.b1.talk(t1) + "\n"
-        s += "2: " + rec.b2.talk(t2) + "\n"
         return s
     
     def stats_string(self):

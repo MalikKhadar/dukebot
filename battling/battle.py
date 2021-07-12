@@ -51,6 +51,8 @@ class Battle:
         s = "\t~Standing Champ~\n"
         s += "who\twins\tloss\tdraw\n"
         standing = self.rm.pool.get_champ()
+        if standing == None:
+            return ""
         s += standing.stat_string()
         #ultimate champ
         s += "\t~Ultimate Champ~\n"

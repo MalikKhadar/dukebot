@@ -88,6 +88,8 @@ class Battler_Pool:
 
     def get_champ(self, standing=True):
         '''battler with most wins'''
+        if len(self.battlers) == 0:
+            return None
         contenders = self.battlers
         #if considering retired as well
         if standing == False:
@@ -96,3 +98,4 @@ class Battler_Pool:
         for c in contenders:
             if c.get_wins() > champ.get_wins():
                 champ = c
+        return champ

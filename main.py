@@ -30,8 +30,10 @@ client = discord.Client()
 if "active" not in db.keys():
   db["active"] = False
 
-if "dict" not in db.keys():
-  db["dict"] = {}
+if "msgs" not in db.keys():
+  db["msgs"] = []
+  db["user"] = []
+  db["rnum"] = []
 
 if not os.path.isfile("battle.pkl"):
   b = Battle()
@@ -61,14 +63,17 @@ async def on_message(message):
     if msg.startswith('$battle_end'):
         db["active"] = False
         b = load_battle("battle.pkl")
-        s = b.champ_string()
-        s += "\nClear battle history with $battle_clear. Goodbye."
+        s = b.champ_stat()
+        s += "\nClear battle history with $battle_clear."
+        s += "\nGoodbye."
         await message.channel.send(s)
 
     if msg.startswith('$battle_clear'):
         b = Battle()
         save_battle(b, "battle.pkl")
-        db["dict"] = {}
+        db["msgs"] = []
+        db["user"] = []
+        db["rnum"] = []
         s = "Battle history has been cleared."
         await message.channel.send(s)
 
@@ -117,6 +122,7 @@ async def on_reaction_add(reaction, user):
         return
     print("undetermined winner")
 
+    file = ""
     if rec.b1.emoji == reaction.emoji:
         rec.winner = rec.b1
         rec.b1.add_stat(won=True)

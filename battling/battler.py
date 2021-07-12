@@ -56,7 +56,7 @@ class Battler:
 
     def get_wins(self):
         '''return stat.wins'''
-        return stat.wins
+        return self.stat.wins
 
     def talk(self, topics=None):
         '''battle dialogue'''

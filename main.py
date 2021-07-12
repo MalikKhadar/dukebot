@@ -37,7 +37,6 @@ if not os.path.isfile("battle.pkl"):
   b = Battle()
   save_battle(b, "battle.pkl")
   
-#gotta keep track of user on each battle event, if they're the one that added the emoji, on_reaction_add, do the stuff
 #First message show contenders/stats, have contenders' emoji on message
 #2nd and third, contenders say their things, have their wave files attached
 #4th, appears once choice is made, shows all stats, has winner's midi attached
@@ -89,28 +88,35 @@ async def on_message(message):
         await m.add_reaction(e2)
         #file the messageid
         r_num = len(b.rm.records) - 1
-        db["dict"][m.id] = [sender, r_num]
-        
-        # #move following to reaction handler
-        # response += b.stats_string()
+        d = db["dict"]
+        d[m.id] = [sender, r_num]
+        db["dict"] = d
 
 @client.event
 async def on_reaction_add(reaction, user):
+    print("reaction noted")
     msgid = reaction.message.id
+    print(msgid)
+    d = db["dict"]
+    print(d)
+    print(d.keys())
     #stop if reaction to normal message
-    if msgid not in db["dict"].keys() or not db["active"]:
+    if msgid not in d.keys() or not db["active"]:
         return
+    print("special message")
     b = load_battle("battle.pkl")
-    userid = db["dict"][msgid][0]
-    r_num = db["dict"][msgid][1]
+    userid = d[msgid][0]
+    r_num =d[msgid][1]
     #stop if reacter didn't initiate challenge
     if user.id != userid:
         return
+    print("correct user")
     #stop if a winner was already determined
     rec = b.rm.records[r_num]
     if rec.winner != None:
         return
-        
+    print("undetermined winner")
+
     if rec.b1.emoji == reaction.emoji:
         rec.winner = rec.b1
         rec.b1.add_stat(won=True)
@@ -123,8 +129,16 @@ async def on_reaction_add(reaction, user):
         #stop if emoji is irrelevent
         return
     
+    #retire battler if lost too much
+    b.rm.pool.retire_check(rec.b1)
+    b.rm.pool.retire_check(rec.b2)
+
+    print("relevent emoji")
+    save_battle(b, "battle.pkl")
     
-    
+    response = "The battle has been decided. The victor's midi is attached.\n\n"
+    response += b.stats_string()
+    await reaction.message.channel.send(response)
     
 keep_alive()
 client.run(os.getenv('TOKEN'))

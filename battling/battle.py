@@ -8,7 +8,7 @@ class Battle:
             self.rm = rm
 
     def host_battle(self, record_num=None):
-        '''make wav files, await choice'''
+        '''create new battle if new record'''
         #host existing record if specified
         if record_num != None:
             rec = self.rm.records[record_num]
@@ -17,9 +17,6 @@ class Battle:
             self.rm.make_record()
             #use latest (just created)
             rec = self.rm.records[-1]
-        #render, await choice
-        rec.render()
-        rec.save_midi()
 
     def battle_msg(self, record_num=None):
         '''string: battler stats, talk'''

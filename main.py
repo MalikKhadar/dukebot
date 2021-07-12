@@ -94,8 +94,13 @@ async def on_message(message):
         #send the battler's talk/wav
         t1 = b.rm.get_topics(rec.b1, rec.b2)
         t2 = b.rm.get_topics(rec.b2, rec.b1)
-        t1 += rec.b1.talk(t1)
-        t2 += rec.b2.talk(t2)
+        t1 = rec.b1.talk(t1)
+        t2 = rec.b2.talk(t2)
+        rec.render()
+        w1 = discord.File("1.wav")
+        w2 = discord.File("2.wav")
+        await c.send(file=w1, content=t1)
+        await c.send(file=w2, content=t2)
 
 
 @client.event

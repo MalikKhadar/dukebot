@@ -30,10 +30,8 @@ client = discord.Client()
 if "active" not in db.keys():
   db["active"] = False
 
-if "msgs" not in db.keys():
-  db["msgs"] = []
-  db["user"] = []
-  db["rnum"] = []
+if "dict" not in db.keys():
+  db["dict"] = {}
 
 if not os.path.isfile("battle.pkl"):
   b = Battle()
@@ -71,9 +69,7 @@ async def on_message(message):
     if msg.startswith('$battle_clear'):
         b = Battle()
         save_battle(b, "battle.pkl")
-        db["msgs"] = []
-        db["user"] = []
-        db["rnum"] = []
+        db["dict"] = {}
         s = "Battle history has been cleared."
         await message.channel.send(s)
 
@@ -93,34 +89,24 @@ async def on_message(message):
         await m.add_reaction(e2)
         #file the messageid
         r_num = len(b.rm.records) - 1
-        d = db["dict"]
-        d[m.id] = [sender, r_num]
-        db["dict"] = d
+        db["dict"][m.id] = [sender, r_num]
 
 @client.event
 async def on_reaction_add(reaction, user):
-    print("reaction noted")
-    msgid = reaction.message.id
-    print(msgid)
-    d = db["dict"]
-    print(d)
-    print(d.keys())
+    msgid = str(reaction.message.id)
     #stop if reaction to normal message
-    if msgid not in d.keys() or not db["active"]:
+    if str(msgid) not in db["dict"].keys() or not db["active"]:
         return
-    print("special message")
     b = load_battle("battle.pkl")
-    userid = d[msgid][0]
-    r_num =d[msgid][1]
+    userid = db["dict"][msgid][0]
+    r_num =db["dict"][msgid][1]
     #stop if reacter didn't initiate challenge
     if user.id != userid:
         return
-    print("correct user")
     #stop if a winner was already determined
     rec = b.rm.records[r_num]
     if rec.winner != None:
         return
-    print("undetermined winner")
 
     file = ""
     if rec.b1.emoji == reaction.emoji:
@@ -139,7 +125,6 @@ async def on_reaction_add(reaction, user):
     b.rm.pool.retire_check(rec.b1)
     b.rm.pool.retire_check(rec.b2)
 
-    print("relevent emoji")
     save_battle(b, "battle.pkl")
     
     response = "The battle has been decided. The victor's midi is attached.\n\n"

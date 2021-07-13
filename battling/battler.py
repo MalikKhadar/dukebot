@@ -34,8 +34,7 @@ class Battler:
         elif outcome == -1:
             out = "\tLOSER"
         s = self.emoji + ":\t"
-        s += self.stat.stat_string()
-        s += out
+        s += self.stat.stat_string(out)
         return s
 
     def add_stat(self, won=True, cap=3):

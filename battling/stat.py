@@ -5,9 +5,9 @@ class Stat:
         self.loss = loss
         self.draw = draw
 
-    def stat_string(self):
+    def stat_string(self, outcome=""):
         '''return row in stats'''
         s = str(self.wins) + "\t\t"
         s += str(self.loss) + "\t\t"
-        s += str(self.draw) + "\n"
+        s += str(self.draw) + outcome + "\n"
         return s

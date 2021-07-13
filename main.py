@@ -18,11 +18,9 @@ import pickle
 def save_battle(battle, dest):
     with open(dest, 'wb') as output:
         pickle.dump(battle, output, pickle.HIGHEST_PROTOCOL)
-        print("dumped")
 
 def load_battle(dest):
     with open(dest, 'rb') as input_file:
-        print("loaded")
         return pickle.load(input_file)
 
 client = discord.Client()
@@ -142,9 +140,13 @@ async def on_reaction_add(reaction, user):
 
     save_battle(b, "battle.pkl")
     
+    #reply to the user's challenge
+    c = reaction.message.channel
+    challege_msg = c.fetch_message(int(msgid))
+
     response = "The battle has been decided. The victor's midi is attached.\n\n"
     response += b.stats_string()
-    await reaction.message.channel.send(file=file, content=response)
+    await challege_msg.reply(file=file, content=response)
     
 keep_alive()
 client.run(os.getenv('TOKEN'))

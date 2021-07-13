@@ -99,7 +99,7 @@ async def on_message(message):
 async def on_reaction_add(reaction, user):
     msgid = str(reaction.message.id)
     #stop if reaction to normal message
-    if str(msgid) not in db["dict"].keys() or not db["active"]:
+    if msgid not in db["dict"].keys() or not db["active"]:
         return
     b = load_battle("battle.pkl")
     userid = db["dict"][msgid][0]
@@ -134,6 +134,8 @@ async def on_reaction_add(reaction, user):
     #remove draw status of battle
     rec.b1.stat.draw -= 1
     rec.b2.stat.draw -= 1
+    #no longer need to track
+    del db["dict"][msgid]
 
     save_battle(b, "battle.pkl")
     

@@ -11,10 +11,6 @@ import os
 from replit import db
 import pickle
 
-# b = battle.Battle()
-# while(True):
-#     b.host_battle()
-
 def save_battle(battle, dest):
     with open(dest, 'wb') as output:
         pickle.dump(battle, output, pickle.HIGHEST_PROTOCOL)
@@ -22,6 +18,9 @@ def save_battle(battle, dest):
 def load_battle(dest):
     with open(dest, 'rb') as input_file:
         return pickle.load(input_file)
+
+def monospace(text):
+    return "```" + text + "```"
 
 client = discord.Client()
 
@@ -34,12 +33,6 @@ if "dict" not in db.keys():
 if not os.path.isfile("battle.pkl"):
   b = Battle()
   save_battle(b, "battle.pkl")
-  
-#First message show contenders/stats, have contenders' emoji on message
-#2nd and third, contenders say their things, have their wave files attached
-#4th, appears once choice is made, shows all stats, has winner's midi attached
-
-# dict for messageid to record_num?
 
 @client.event
 async def on_ready():
@@ -76,6 +69,7 @@ async def on_message(message):
         b = load_battle("battle.pkl")
         b.host_battle()
         response = b.battle_msg()
+        response = monospace(response)
         save_battle(b, "battle.pkl")
         c = message.channel
         rec = b.rm.records[-1]
@@ -146,6 +140,7 @@ async def on_reaction_add(reaction, user):
 
     response = "The battle has been decided. The victor's midi is attached.\n\n"
     response += b.stats_string()
+    response = monospace(response)
     await challege_msg.reply(file=file, content=response)
     
 keep_alive()

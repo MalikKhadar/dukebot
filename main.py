@@ -78,8 +78,20 @@ async def on_message(message):
         e2 = rec.b2.emoji
         #post message with emoji
         m = await c.send(response)
-        await m.add_reaction(e1)
-        await m.add_reaction(e2)
+        try:
+            await m.add_reaction(e1)
+        except:
+            #emoji is unknown to discord
+            rec.b1.emoji = 💩
+            e1 = rec.b1.emoji
+            await m.add_reaction(e1)
+        try:
+            await m.add_reaction(e2)
+        except:
+            #emoji is unknown to discord
+            rec.b2.emoji = 💩
+            e1 = rec.b2.emoji
+            await m.add_reaction(e2)
         #file the messageid
         r_num = len(b.rm.records) - 1
         db["dict"][m.id] = [sender, r_num]

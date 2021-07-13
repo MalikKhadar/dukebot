@@ -28,8 +28,14 @@ class Battler:
 
     def stat_string(self, outcome=0):
         '''return row in stats'''
+        out = ""
+        if outcome == 1:
+            out = "\tWINNER"
+        elif outcome == -1:
+            out = "\tLOSER"
         s = self.emoji + ":\t"
-        s += self.stat.stat_string(outcome=0)
+        s += self.stat.stat_string()
+        s += out
         return s
 
     def add_stat(self, won=True, cap=3):

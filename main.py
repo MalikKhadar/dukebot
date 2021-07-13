@@ -125,17 +125,23 @@ async def on_reaction_add(reaction, user):
         return
 
     file = ""
+    w = None
+    l = None
     b.rm.records[r_num].save_midi()
     if rec.b1.emoji == reaction.emoji:
         rec.winner = rec.b1
         rec.b1.add_stat(won=True)
         rec.b2.add_stat(won=False)
         file = discord.File("1.mid")
+        w = rec.b1
+        l = rec.b2
     elif rec.b2.emoji == reaction.emoji:
         rec.winner = rec.b2
         rec.b1.add_stat(won=False)
         rec.b2.add_stat(won=True)
         file = discord.File("2.mid")
+        w = rec.b2
+        l = rec.b1
     else:
         #stop if emoji is irrelevent
         return
@@ -156,7 +162,7 @@ async def on_reaction_add(reaction, user):
     challege_msg = await c.fetch_message(int(msgid))
 
     response = "This battle has been decided.\nThe victor's midi is attached.\n\n"
-    response += b.stats_string()
+    response += b.stats_string(w, l)
     response = monospace(response)
     await challege_msg.reply(file=file, content=response)
     

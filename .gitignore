@@ -1,5 +1,6 @@
 midi/maestro-v3.0.0/
 midi/chunks/
+battle.pkl
 
 # Byte-compiled / optimized / DLL files
 __pycache__/

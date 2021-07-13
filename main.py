@@ -82,14 +82,14 @@ async def on_message(message):
             await m.add_reaction(e1)
         except:
             #emoji is unknown to discord
-            rec.b1.emoji = 💩
+            rec.b1.emoji = "💩"
             e1 = rec.b1.emoji
             await m.add_reaction(e1)
         try:
             await m.add_reaction(e2)
         except:
             #emoji is unknown to discord
-            rec.b2.emoji = 💩
+            rec.b2.emoji = "💩"
             e1 = rec.b2.emoji
             await m.add_reaction(e2)
         #file the messageid

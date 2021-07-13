@@ -20,6 +20,9 @@ def load_battle(dest):
         return pickle.load(input_file)
 
 def monospace(text):
+    if text == "":
+        #don't leave 6 backticks behind
+        return ""
     return "```" + text + "```"
 
 client = discord.Client()
@@ -52,8 +55,9 @@ async def on_message(message):
     if msg.startswith('$battle_end'):
         db["active"] = False
         b = load_battle("battle.pkl")
-        s = b.champ_stat()
-        s += "\nClear battle history with $battle_clear."
+        s = monospace(b.champ_stat())
+        if len(b.rm.records) > 0:
+            s += "\nClear battle history with $battle_clear, if desired."
         s += "\nGoodbye."
         await message.channel.send(s)
 

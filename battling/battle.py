@@ -38,7 +38,7 @@ class Battle:
     
     def stats_string(self, w=None, l=None):
         '''stat string from pool'''
-        return self.rm.pool.stats_string(w=None, l=None)
+        return self.rm.pool.stats_string(w, l)
 
     def champ_stat(self):
         '''stats of standing/retired champ'''

@@ -131,14 +131,17 @@ async def on_reaction_add(reaction, user):
     #retire battler if lost too much
     b.rm.pool.retire_check(rec.b1)
     b.rm.pool.retire_check(rec.b2)
+    #remove draw status of battle
+    rec.b1.stat.draw -= 1
+    rec.b2.stat.draw -= 1
 
     save_battle(b, "battle.pkl")
     
-    #reply to the user's challenge
+    #reply to the battler intro msg
     c = reaction.message.channel
-    challege_msg = c.fetch_message(int(msgid))
+    challege_msg = await c.fetch_message(int(msgid))
 
-    response = "The battle has been decided. The victor's midi is attached.\n\n"
+    response = "This battle has been decided.\nThe victor's midi is attached.\n\n"
     response += b.stats_string()
     response = monospace(response)
     await challege_msg.reply(file=file, content=response)

@@ -27,10 +27,13 @@ class Battle:
         else:
             rec = self.rm.records[-1]
         #display stats of contenders
-        s = "\t~Contenders~\n"
+        s = "\t\t~Contenders~\n"
         s += "who\twins\tloss\tdraw\n"
         s += rec.b1.stat_string()
         s += rec.b2.stat_string()
+        #increase draw num AFTER text
+        rec.b1.stat.draw += 1
+        rec.b2.stat.draw += 1
         return s
     
     def stats_string(self):
@@ -40,14 +43,14 @@ class Battle:
     def champ_stat(self):
         '''stats of standing/retired champ'''
         #standing champ
-        s = "\t~Standing Champ~\n"
+        s = "\t\t~Standing Champ~\n"
         s += "who\twins\tloss\tdraw\n"
         standing = self.rm.pool.get_champ()
         if standing == None:
             return ""
         s += standing.stat_string()
         #ultimate champ
-        s += "\t~Ultimate Champ~\n"
+        s += "\t\t~Ultimate Champ~\n"
         s += "who\twins\tloss\tdraw\n"
         #False param for non-standing champ
         ult = self.rm.pool.get_champ(False)

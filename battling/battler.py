@@ -28,7 +28,7 @@ class Battler:
 
     def stat_string(self):
         '''return row in stats'''
-        s = self.emoji + ": "
+        s = self.emoji + ":\t"
         s += self.stat.stat_string()
         return s
 

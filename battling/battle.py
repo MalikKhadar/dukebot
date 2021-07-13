@@ -36,9 +36,9 @@ class Battle:
         rec.b2.stat.draw += 1
         return s
     
-    def stats_string(self):
+    def stats_string(self, w=None, l=None):
         '''stat string from pool'''
-        return self.rm.pool.stats_string()
+        return self.rm.pool.stats_string(w=None, l=None)
 
     def champ_stat(self):
         '''stats of standing/retired champ'''

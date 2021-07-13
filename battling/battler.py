@@ -26,10 +26,10 @@ class Battler:
         '''write midi to dest'''
         copyfile(self.midi, dest)
 
-    def stat_string(self):
+    def stat_string(self, outcome=0):
         '''return row in stats'''
         s = self.emoji + ":\t"
-        s += self.stat.stat_string()
+        s += self.stat.stat_string(outcome=0)
         return s
 
     def add_stat(self, won=True, cap=3):
